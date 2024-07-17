@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/app.js",
+      "PackagePath": "staticwebassets/app.js"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/css/blazor-ui.css",
+      "PackagePath": "staticwebassets/css/blazor-ui.css"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/logo-nobkg.png",
+      "PackagePath": "staticwebassets/logo-nobkg.png"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/logo.png",
+      "PackagePath": "staticwebassets/logo.png"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/numbers.json",
+      "PackagePath": "staticwebassets/numbers.json"
+    },
+    {
+      "Id": "/Users/nic/git/PuckTracker/PuckTracker/wwwroot/rosters.json",
+      "PackagePath": "staticwebassets/rosters.json"
+    },
+    {
+      "Id": "obj/Debug/net8.0-android/staticwebassets/msbuild.PuckTracker.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0-android/staticwebassets/msbuild.build.PuckTracker.props",
+      "PackagePath": "build\\PuckTracker.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0-android/staticwebassets/msbuild.buildMultiTargeting.PuckTracker.props",
+      "PackagePath": "buildMultiTargeting\\PuckTracker.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0-android/staticwebassets/msbuild.buildTransitive.PuckTracker.props",
+      "PackagePath": "buildTransitive\\PuckTracker.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

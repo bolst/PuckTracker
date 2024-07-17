@@ -1,0 +1,108 @@
+@namespace PuckTracker.Components
+@inject NavigationManager navManager
+
+<Button Color="Color.Primary" TextWeight="TextWeight.Bold" Clicked="ShowModal">UPLOAD ROSTER</Button>
+
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Upload Roster</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Selection</FieldLabel>
+                @* <FileEdit Changed="@OnChanged" Filter=".json, .csv" /> *@
+                <Button Color="Color.Light" Clicked="SelectFile">Select File</Button>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Primary" Clicked="() => HideModal()">Close</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+
+
+    #region Modal
+
+    private Modal modalRef;
+
+    private Task ShowModal() { return modalRef.Show(); }
+    private Task HideModal() { return modalRef.Hide(); }
+
+    #endregion
+
+    async Task SelectFile()
+    {
+        try
+        {
+            Microsoft.Maui.Storage.FileResult? result = await Microsoft.Maui.Storage.FilePicker.Default.PickAsync();
+            if (result != null)
+            {
+                Console.WriteLine(result.FileName);
+
+                using var stream = await result.OpenReadAsync();
+                using var reader = new StreamReader(stream);
+
+                Roster roster = new Roster(reader.ReadToEnd());
+                await Api.RosterService.Instance().AddRoster(roster);
+            }
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("uh oh");
+        }
+
+        await HideModal();
+        navManager.NavigateTo("/redirect?To=rosters");
+
+    }
+
+    /* IFileEntry? file = null;
+    Task OnChanged(FileChangedEventArgs e)
+    {
+    try
+    {
+    file = e.Files.FirstOrDefault();
+    if (file == null)
+    {
+    return Task.CompletedTask;
+    }
+    }
+    catch (Exception exc)
+    {
+    Console.WriteLine(exc.Message);
+
+    }
+    finally
+    {
+    this.StateHasChanged();
+    }
+    return Task.CompletedTask;
+    } */
+
+    /* async Task UploadRoster()
+    {
+    if (file == null)
+    {
+    return;
+    }
+    using (MemoryStream stream = new MemoryStream())
+    {
+
+    await file.OpenReadStream(long.MaxValue).CopyToAsync(stream);
+    stream.Seek(0, SeekOrigin.Begin);
+    var reader = new StreamReader(stream);
+
+    Roster roster = new Roster(reader.ReadToEnd());
+    Api.RosterService.Instance().AddRoster(roster);
+
+    await HideModal();
+    }
+
+    navManager.NavigateTo(navManager.Uri, true);
+    } */
+}

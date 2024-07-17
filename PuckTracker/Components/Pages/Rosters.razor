@@ -1,0 +1,29 @@
+@page "/rosters"
+
+<EditNumbersRosterModal />
+<UploadRosterModal />
+<DeleteRosterModal />
+
+
+@if (rosters is not null)
+{
+    foreach (Roster roster in rosters)
+    {
+        <Div Padding="Padding.Is3.OnY">
+    <RosterAccordion roster="@roster" />
+</Div>
+    }
+}
+
+
+
+@code {
+
+    List<Roster>? rosters = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rosters = await Api.RosterService.Instance().Rosters();
+    }
+
+}

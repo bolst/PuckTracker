@@ -1,0 +1,50 @@
+@namespace PuckTracker.Components
+
+<Table Bordered FullWidth TextSize="TextSize.ExtraSmall">
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell ColumnSpan="5" TextColor="TextColor.Secondary">GOALS</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">PERIOD</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">TIME</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">#</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">A</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">A</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        @if (Home)
+        {
+            foreach (Goal goal in Api.GameService.Instance().Game().HomeGoals)
+            {
+                <TableRow>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@goal.Period</TableRowHeader>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@goal.Time</TableRowHeader>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@goal.PlayerNumber</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@goal.Assist1</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@goal.Assist2</TableRowCell>
+                </TableRow>
+            }
+        }
+        else
+        {
+            foreach (Goal goal in Api.GameService.Instance().Game().AwayGoals)
+            {
+                <TableRow>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@goal.Period</TableRowHeader>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@goal.Time</TableRowHeader>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@goal.PlayerNumber</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@goal.Assist1</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@goal.Assist2</TableRowCell>
+                </TableRow>
+            }
+        }
+    </TableBody>
+</Table>
+
+@code {
+    [Parameter] public bool Home { get; set; } = true;
+}

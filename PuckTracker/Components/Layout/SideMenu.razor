@@ -1,0 +1,54 @@
+﻿<Bar Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
+    Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small" @bind-Visible="@barVisible">
+    <BarToggler />
+    <BarBrand Height="Height.Px(84)">
+        <BarItem>
+            <BarLink To="">
+                <BarIcon IconName="customIcon" />
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="/newgame">
+                    <BarIcon IconName="IconName.Add" />
+                    New Game
+                </BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="/gamesheet">
+                    <BarIcon IconName="IconName.Dashboard" />
+                    Scoresheet
+                </BarLink>
+            </BarItem>
+            <BarItem>
+                <BarLink To="/rosters">
+                    <BarIcon IconName="IconName.UserFriends" />
+                    Rosters
+                </BarLink>
+            </BarItem>
+        </BarStart>
+        @* <BarEnd>
+        <BarItem>
+        <BarDropdown>
+        <BarDropdownToggle>
+        <BarIcon IconName="IconName.Smartphone" />
+        Apps
+        </BarDropdownToggle>
+        <BarDropdownMenu>
+        <BarDropdownItem To="/apps/todo">
+        Todo
+        </BarDropdownItem>
+        </BarDropdownMenu>
+        </BarDropdown>
+        </BarItem>
+        </BarEnd> *@
+    </BarMenu>
+</Bar>
+@code {
+    private bool barVisible = false;
+    private bool pagesBarVisible = false;
+
+    RenderFragment customIcon =@<Image Source="/logo-nobkg.png" Width="Width.Px(64)" Height="Height.Px(64)" />;
+}

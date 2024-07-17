@@ -1,0 +1,90 @@
+@page "/newgame"
+@inject NavigationManager navManager
+
+<Steps @ref="stepsRef" @bind-SelectedStep="selectedStep">
+    <Items>
+        <Step Name="1">Title</Step>
+        <Step Name="2">Home</Step>
+        <Step Name="3">Away</Step>
+        <Step Name="4">Date/Time</Step>
+        <Step Name="5">Confirm</Step>
+    </Items>
+    <Content>
+        <StepPanel Name="1" Width="Width.Is75" Margin="Margin.IsAuto">
+            <TextEdit Placeholder="Title of game" @bind-Text="inputTitle" />
+        </StepPanel>
+        <StepPanel Name="2" Width="Width.Is75" Margin="Margin.IsAuto">
+            <RosterSelectPreview @bind-SelectedTeam="selectedHomeTeam" />
+        </StepPanel>
+        <StepPanel Name="3" Width="Width.Is75" Margin="Margin.IsAuto">
+            <RosterSelectPreview @bind-SelectedTeam="selectedAwayTeam" />
+        </StepPanel>
+        <StepPanel Name="4" Width="Width.Is75" Margin="Margin.IsAuto">
+            <DateEdit TValue="DateTime?" @bind-Date="@selectedDate" InputMode="DateInputMode.DateTime" />
+        </StepPanel>
+        <StepPanel Name="5" Width="Width.Is75" Margin="Margin.IsAuto">
+            <Heading Size="HeadingSize.Is5">
+                <b>Title</b> - @inputTitle
+            </Heading>
+            <Heading Size="HeadingSize.Is5">
+                <b>Home team</b> - @selectedHomeTeam
+            </Heading>
+            <Heading Size="HeadingSize.Is5">
+                <b>Away team</b> - @selectedAwayTeam
+            </Heading>
+            <Heading Size="HeadingSize.Is5">
+                <b>Date</b> - @(selectedDate?.ToString("MMMM dd, yyyy @ hh:mmtt"))
+            </Heading>
+        </StepPanel>
+    </Content>
+</Steps>
+
+
+<Div Display="Display.Flex" Class="justify-content-center">
+    @if (selectedStep != "5")
+    {
+        <Button Color="Color.Secondary" Margin="Margin.Is2.FromEnd" Clicked="() => stepsRef.PreviousStep()">
+            Previous
+        </Button>
+        <Button Color="Color.Primary" Clicked="() => stepsRef.NextStep()">
+            Next
+        </Button>
+    }
+    else
+    {
+        <Button Color="Color.Success" Clicked="StartGame">
+            Start Game
+        </Button>
+    }
+    </Div>
+
+    @code {
+    private Steps stepsRef;
+
+    private string selectedStep = "1";
+
+    private string inputTitle = "";
+    private string selectedHomeTeam;
+    private string selectedAwayTeam;
+    DateTime? selectedDate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var home = await Api.RosterService.Instance().Rosters();
+            selectedHomeTeam = home[0].Name;
+            var away = await Api.RosterService.Instance().Rosters(selectedHomeTeam);
+            selectedAwayTeam = away[0].Name;
+            selectedDate = DateTime.Now;
+        }
+        catch (Exception) { }
+    }
+
+    void StartGame()
+    {
+        Game game = new Game(inputTitle, selectedHomeTeam, selectedAwayTeam, selectedDate ?? DateTime.Now);
+        Api.GameService.Instance().SetGame(game);
+        navManager.NavigateTo("/gamesheet");
+    }
+}

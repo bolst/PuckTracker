@@ -1,0 +1,64 @@
+@namespace PuckTracker.Components
+@inject NavigationManager navManager
+
+<Button Color="Color.Secondary" TextWeight="TextWeight.Bold" Clicked="ShowModal">DELETE ROSTER</Button>
+
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Delete Roster</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>Selection</FieldLabel>
+                @if (rosters is not null)
+                {
+                    <Select @bind-SelectedValue="@selectedTeam">
+                        @foreach (Roster roster in rosters)
+                        {
+                            <SelectItem Value="@roster.Name">@roster.Name</SelectItem>
+                        }
+                    </Select>
+                }
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="DeleteRoster">Delete Roster</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+
+
+    #region Modal
+
+    private Modal modalRef;
+
+    private Task ShowModal() { return modalRef.Show(); }
+    private Task HideModal() { return modalRef.Hide(); }
+
+    #endregion
+
+    string selectedTeam;
+    List<Roster>? rosters = null;
+    protected override async Task OnInitializedAsync()
+    {
+        rosters = await Api.RosterService.Instance().Rosters();
+        if (rosters.Count != 0)
+        {
+            selectedTeam = rosters[0].Name;
+        }
+    }
+
+    async Task DeleteRoster()
+    {
+        await Api.RosterService.Instance().DeleteRoster(selectedTeam);
+        await HideModal();
+
+        navManager.NavigateTo("/redirect?To=rosters");
+        // navManager.NavigateTo(navManager.Uri, true);
+    }
+}

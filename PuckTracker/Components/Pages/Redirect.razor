@@ -1,0 +1,11 @@
+@page "/redirect"
+@inject NavigationManager navManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        Uri uri = new Uri(navManager.Uri);
+        string to = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("To") ?? "";
+        navManager.NavigateTo("/" + to);
+    }
+}

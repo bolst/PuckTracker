@@ -1,0 +1,41 @@
+@namespace PuckTracker.Components
+
+@if (rosters is not null)
+{
+    <Select @bind-SelectedValue="@SelectedTeam">
+
+    @foreach (Roster roster in rosters)
+        {
+            <SelectItem Value="@roster.Name">@roster.Name</SelectItem>
+        }
+            </Select>
+}
+
+@code {
+
+    List<Roster>? rosters = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rosters = await Api.RosterService.Instance().Rosters();
+    }
+
+
+    private string selectedTeamValue;
+
+
+
+    [Parameter]
+    public string SelectedTeam
+    {
+        get => selectedTeamValue;
+        set
+        {
+            if (selectedTeamValue == value) return;
+            selectedTeamValue = value;
+            SelectedTeamChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter] public EventCallback<string> SelectedTeamChanged { get; set; }
+}

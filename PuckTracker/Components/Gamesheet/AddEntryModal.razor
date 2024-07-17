@@ -1,0 +1,234 @@
+@namespace PuckTracker.Components
+@inject NavigationManager navManager
+
+<Button Color="@buttonColor" TextSize="TextSize.ExtraSmall" Clicked="ShowModal">@buttonText</Button>
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>@buttonText</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            @* <Field>
+            <FieldLabel>Home/Away</FieldLabel>
+            <Select TValue="string" @bind-SelectedValue="@selectedHomeAway">
+            <SelectItem Value=@("Home")>Home</SelectItem>
+            <SelectItem Value=@("Away")>Away</SelectItem>
+            </Select>
+            </Field>
+            <Field>
+            <FieldLabel>Goal/Penalty</FieldLabel>
+            <Select TValue="string" @bind-SelectedValue="@selectedGoalPenalty">
+            <SelectItem Value=@("Goal")>Goal</SelectItem>
+            <SelectItem Value=@("Penalty")>Penalty</SelectItem>
+            </Select>
+            </Field> *@
+            <Field>
+                <FieldLabel>Time</FieldLabel>
+                <Select @bind-SelectedValue="@selectedMin">
+                    @for (int i = 0; i <= 12; i++)
+                    {
+                        int j = i;
+                        <SelectItem Value="@j.ToString()">@j</SelectItem>
+                    }
+                </Select>
+                <Select @bind-SelectedValue="@selectedSec">
+                    @for (int i = 0; i <= 59; i++)
+                    {
+                        int j = i;
+                        <SelectItem Value="@j.ToString()">@j</SelectItem>
+                    }
+                </Select>
+            </Field>
+            <Field>
+                <FieldLabel>Period</FieldLabel>
+                <Select @bind-SelectedValue="@selectedPeriod">
+                    <SelectItem Value="1">1</SelectItem>
+                    <SelectItem Value="2">2</SelectItem>
+                    <SelectItem Value="3">3</SelectItem>
+                </Select>
+            </Field>
+            <Field>
+                <FieldLabel>Player</FieldLabel>
+                <Select @bind-SelectedValue="@selectedPlayer">
+                    @for (int i = 1; i <= 99; i++)
+                    {
+                        int j = i;
+                        <SelectItem Value="@j">@j</SelectItem>
+                    }
+                </Select>
+            </Field>
+            @if (IsGoal)
+            {
+                <Field>
+                    <FieldLabel>Primary Assist</FieldLabel>
+                    <Select @bind-SelectedValue="@selectedAssist1">
+                        <SelectItem Value=@("")></SelectItem>
+                        @for (int i = 1; i <= 99; i++)
+                        {
+                            int j = i;
+                            <SelectItem Value="@j">@j</SelectItem>
+                        }
+                    </Select>
+                </Field>
+                <Field>
+                    <FieldLabel>Secondary Assist</FieldLabel>
+                    <Select @bind-SelectedValue="@selectedAssist2">
+                        <SelectItem Value=@("")></SelectItem>
+                        @for (int i = 1; i <= 99; i++)
+                        {
+                            int j = i;
+                            <SelectItem Value="@j">@j</SelectItem>
+                        }
+                    </Select>
+                </Field>
+            }
+            else
+            {
+                <Field>
+                    <FieldLabel>Infraction</FieldLabel>
+                    <Select @bind-SelectedValue="@selectedInfraction">
+                        @foreach (string infraction in Penalty.INFRACTIONS)
+                        {
+                            <SelectItem Value="@infraction">@infraction</SelectItem>
+                        }
+                    </Select>
+                </Field>
+                <Field>
+                    <FieldLabel>Duration</FieldLabel>
+                    <Select @bind-SelectedValue="@selectedDuration">
+                        <SelectItem Value="2">2</SelectItem>
+                        <SelectItem Value="3">3</SelectItem>
+                        <SelectItem Value="4">4</SelectItem>
+                        <SelectItem Value="5">5</SelectItem>
+                        <SelectItem Value="10">10</SelectItem>
+                    </Select>
+                </Field>
+            }
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Primary" Clicked="AddEntry">Add</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+    Color buttonColor = Color.Primary;
+    string buttonText = "Add Goal";
+    protected override void OnInitialized()
+    {
+        buttonColor = IsGoal ? Color.Primary : Color.Danger;
+        buttonText = IsGoal ? "Add Goal" : "Add Penalty";
+        selectedHomeAway = IsHome ? "Home" : "Away";
+        selectedGoalPenalty = IsGoal ? "Goal" : "Penalty";
+    }
+
+
+    #region Modal
+
+    private Modal modalRef;
+    private string selectedMin = "0";
+    private string selectedSec = "0";
+    private string selectedPeriod = "1";
+    private string selectedHomeAway = "Home";
+    private string selectedGoalPenalty = "Home";
+    private string selectedPlayer = "1";
+    private string selectedAssist1 = "";
+    private string selectedAssist2 = "";
+    private string selectedInfraction = "Tripping";
+    private string selectedDuration = "2";
+
+    private Task ShowModal() { return modalRef.Show(); }
+    private Task HideModal() { return modalRef.Hide(); }
+
+    #endregion
+
+    [Parameter] public bool IsHome { get; set; } = true;
+    [Parameter] public bool IsGoal { get; set; } = true;
+
+    public void AddEntry()
+    {
+        if (selectedMin.Length < 2)
+        {
+            selectedMin = "0" + selectedMin;
+        }
+        if (selectedSec.Length < 2)
+        {
+            selectedSec = "0" + selectedSec;
+        }
+
+        selectedDuration = selectedDuration + ":00";
+
+        if (IsGoal && IsHome)
+        {
+            AddHomeGoal();
+        }
+        else if (IsGoal && !IsHome)
+        {
+            AddAwayGoal();
+        }
+        else if (!IsGoal && IsHome)
+        {
+            AddHomePenalty();
+        }
+        else
+        {
+            AddAwayPenalty();
+        }
+
+        HideModal();
+        navManager.NavigateTo("/");
+        /* navManager.NavigateTo(navManager.Uri, true); */
+
+    }
+    public void AddHomePenalty()
+    {
+        Penalty penalty = new Penalty
+            {
+                PlayerNumber = selectedPlayer,
+                Infraction = selectedInfraction,
+                Minutes = selectedDuration,
+                Time = selectedMin + ":" + selectedSec,
+                Period = selectedPeriod,
+            };
+        Api.GameService.Instance().AddHomePenalty(penalty);
+    }
+    public void AddHomeGoal()
+    {
+        Goal goal = new Goal
+            {
+                PlayerNumber = selectedPlayer,
+                Assist1 = selectedAssist1,
+                Assist2 = selectedAssist2,
+                Time = selectedMin + ":" + selectedSec,
+                Period = selectedPeriod,
+            };
+        Api.GameService.Instance().AddHomeGoal(goal);
+    }
+    public void AddAwayPenalty()
+    {
+        Penalty penalty = new Penalty
+            {
+                PlayerNumber = selectedPlayer,
+                Infraction = selectedInfraction,
+                Minutes = selectedDuration,
+                Time = selectedMin + ":" + selectedSec,
+                Period = selectedPeriod,
+            };
+        Api.GameService.Instance().AddAwayPenalty(penalty);
+
+    }
+    public void AddAwayGoal()
+    {
+        Goal goal = new Goal
+            {
+                PlayerNumber = selectedPlayer,
+                Assist1 = selectedAssist1,
+                Assist2 = selectedAssist2,
+                Time = selectedMin + ":" + selectedSec,
+                Period = selectedPeriod,
+            };
+        Api.GameService.Instance().AddAwayGoal(goal);
+    }
+}

@@ -1,0 +1,34 @@
+@namespace PuckTracker.Components
+
+@if (roster is not null)
+{
+    <Accordion Border="Border.Is2.Rounded.Is2">
+        <AccordionItem @bind-Visible="@contentVisible">
+            <AccordionHeader>
+                <AccordionToggle TextWeight="TextWeight.Bold" TextSize="TextSize.Heading5">@roster.Name</AccordionToggle>
+            </AccordionHeader>
+            <AccordionBody>
+    @foreach (var player in roster.Players)
+    {
+        <Grid RowColumns="RowColumns.Are3" Padding="Padding.Is2.FromBottom">
+            <Column ColumnSize="ColumnSize.IsThird">
+            <Heading Size="HeadingSize.Is6" TextWeight="TextWeight.Bold">@player.Name</Heading>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsThird">
+            <Heading Size="HeadingSize.Is6">@player.BirthYear</Heading>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsThird">
+            <Heading Size="HeadingSize.Is6">@player.Position</Heading>
+            </Column>
+        </Grid>
+    }
+            </AccordionBody>
+        </AccordionItem>
+    </Accordion>
+}
+
+@code {
+    [Parameter] public Roster? roster { get; set; } = null;
+
+    bool contentVisible = false;
+}

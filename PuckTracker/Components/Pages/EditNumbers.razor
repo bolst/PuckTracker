@@ -1,0 +1,105 @@
+@page "/editnumbers"
+@inject NavigationManager navManager
+
+@if ((team is not null) && (nameAndNumbers is not null))
+{
+
+    <Table Bordered FullWidth TextSize="TextSize.Small">
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell ColumnSpan="3" TextColor="TextColor.Secondary">
+                @Api.RosterService.Instance().GetRosterByName(team).Name.ToUpper()</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">Edit</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">#</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">PLAYER</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        @foreach (var (name, num) in nameAndNumbers)
+            {
+                <TableRow>
+                    <TableRowCell Width="Width.Px(50)" TextAlignment="TextAlignment.Center">
+                        <Button Clicked="() => InitEdit(name)" Background="Background.Light">
+                            <Icon Name="IconName.Edit" />
+                        </Button>
+                    </TableRowCell>
+                    <TableRowHeader TextAlignment="TextAlignment.Center" VerticalAlignment="VerticalAlignment.Middle">
+                        @num</TableRowHeader>
+                    <TableRowCell TextAlignment="TextAlignment.Center" VerticalAlignment="VerticalAlignment.Middle">@name
+                    </TableRowCell>
+                </TableRow>
+            }
+        </TableBody>
+    </Table>
+}
+
+<Modal @ref="modalRef">
+    <ModalContent Centered>
+        <ModalHeader>
+            <ModalTitle>Edit Player Number</ModalTitle>
+            <CloseButton />
+        </ModalHeader>
+        <ModalBody>
+            <Field>
+                <FieldLabel>@selectedPlayer</FieldLabel>
+                <Select @bind-SelectedValue="@selectedNumber">
+                    @for (int i = 1; i < 99; i++)
+                    {
+                        int j = i;
+                        <SelectItem Value="@j">@j</SelectItem>
+                    }
+                </Select>
+            </Field>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="ConfirmEditNumber">Update</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+    #region Modal
+
+    private Modal modalRef;
+
+    private Task ShowModal() { return modalRef.Show(); }
+    private Task HideModal() { return modalRef.Hide(); }
+
+    #endregion
+
+    string? team = null;
+    List<(string, string)>? nameAndNumbers = null;
+    protected override async Task OnInitializedAsync()
+    {
+        Uri uri = new Uri(navManager.Uri);
+        team = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("team") ?? "";
+
+        nameAndNumbers = new();
+        foreach (Player player in Api.RosterService.Instance().GetRosterByName(team).Players)
+        {
+            string num = await Api.RosterService.Instance().GetPlayerNumber(player.Name);
+            nameAndNumbers.Add((player.Name, num));
+        }
+    }
+
+    string selectedPlayer;
+    string selectedNumber = "1";
+    async Task InitEdit(string playerName)
+    {
+        selectedPlayer = playerName;
+        selectedNumber = await Api.RosterService.Instance().GetPlayerNumber(playerName);
+        ShowModal();
+    }
+
+    void ConfirmEditNumber()
+    {
+        Api.RosterService.Instance().UpdatePlayerNumber(selectedPlayer, selectedNumber);
+        HideModal();
+
+        navManager.NavigateTo($"/redirect?To=editnumbers?team={team}");
+    }
+}

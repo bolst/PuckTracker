@@ -1,0 +1,50 @@
+@namespace PuckTracker.Components
+
+<Table Bordered FullWidth TextSize="TextSize.ExtraSmall">
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell ColumnSpan="5" TextColor="TextColor.Secondary">PENALTIES</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">PERIOD</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">TIME</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">#</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">INFRACTION</TableHeaderCell>
+            <TableHeaderCell TextAlignment="TextAlignment.Center">LENGTH</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        @if (Home)
+        {
+            foreach (Penalty penalty in Api.GameService.Instance().Game().HomePenalties)
+            {
+                <TableRow>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@penalty.Period</TableRowHeader>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@penalty.Time</TableRowHeader>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@penalty.PlayerNumber</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@penalty.Infraction</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@penalty.Minutes</TableRowCell>
+                </TableRow>
+            }
+        }
+        else
+        {
+            foreach (Penalty penalty in Api.GameService.Instance().Game().AwayPenalties)
+            {
+                <TableRow>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@penalty.Period</TableRowHeader>
+                    <TableRowHeader TextAlignment="TextAlignment.Center">@penalty.Time</TableRowHeader>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@penalty.PlayerNumber</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@penalty.Infraction</TableRowCell>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@penalty.Minutes</TableRowCell>
+                </TableRow>
+            }
+        }
+    </TableBody>
+</Table>
+
+@code {
+    [Parameter] public bool Home { get; set; } = true;
+}

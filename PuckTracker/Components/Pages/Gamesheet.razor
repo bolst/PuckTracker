@@ -1,0 +1,106 @@
+@page "/gamesheet"
+@inject IJSRuntime JSRuntime
+
+<Grid RowColumns="RowColumns.Are3">
+    <Column ColumnSize="ColumnSize.Is2" TextAlignment="TextAlignment.Start">
+        <Heading Size="HeadingSize.Is4" TextWeight="TextWeight.Bold">@GetGame().Title</Heading>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is3" TextAlignment="TextAlignment.Start">
+        <Heading Size="HeadingSize.Is5">@GetGame().Date?.ToString("MMMM dd yyyy")</Heading>
+        <Heading Size="HeadingSize.Is5">@GetGame().Date?.ToString("h:mmtt")</Heading>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is6" TextAlignment="TextAlignment.Start">
+        <Grid RowColumns="RowColumns.Are2">
+            <Column ColumnSize="ColumnSize.IsHalf">
+                <Heading Size="HeadingSize.Is5" TextColor="TextColor.Secondary">@GetGame().HomeTeam.ToUpper()</Heading>
+                <Heading Size="HeadingSize.Is5">@Api.GameService.Instance().Game().HomeGoals.Count</Heading>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsHalf">
+                <Heading Size="HeadingSize.Is5" TextColor="TextColor.Secondary">@GetGame().AwayTeam.ToUpper()</Heading>
+                <Heading Size="HeadingSize.Is5">@Api.GameService.Instance().Game().AwayGoals.Count</Heading>
+            </Column>
+        </Grid>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is1" TextAlignment="TextAlignment.Start">
+        <Button Color="Color.Success" Clicked="EndGame">Download</Button>
+    </Column>
+</Grid>
+
+<Divider />
+
+<Grid RowColumns="RowColumns.Are6" Padding="Padding.Is2.OnY">
+    <Column ColumnSize="ColumnSize.Is2"></Column>
+    <Column ColumnSize="ColumnSize.Is2">
+        <AddEntryModal IsHome=true IsGoal=false />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is2">
+        <AddEntryModal IsHome=true IsGoal=true />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is2"></Column>
+    <Column ColumnSize="ColumnSize.Is2">
+        <AddEntryModal IsHome=false IsGoal=false />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is2">
+        <AddEntryModal IsHome=false IsGoal=true />
+    </Column>
+</Grid>
+
+<Grid RowColumns="RowColumns.Are4" Padding="Padding.Is2.OnY">
+    <Column ColumnSize="ColumnSize.Is2">
+        <RosterTable roster="@Api.RosterService.Instance().GetRosterByName(GetGame().HomeTeam)" />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <GoalTable Home=true />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is2">
+        <RosterTable roster="@Api.RosterService.Instance().GetRosterByName(GetGame().AwayTeam)" />
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <GoalTable Home=false />
+    </Column>
+</Grid>
+
+<Grid RowColumns="RowColumns.Are2" Padding="Padding.Is2.OnY">
+    <Column ColumnSize="ColumnSize.IsHalf">
+        <PenaltyTable Home=true />
+    </Column>
+    <Column ColumnSize="ColumnSize.IsHalf">
+        <PenaltyTable Home=false />
+    </Column>
+</Grid>
+
+
+
+
+@code {
+
+    public Game GetGame()
+    {
+        return Api.GameService.Instance().Game();
+    }
+
+    /* async Task EndGame()
+    {
+    Game game = Api.GameService.Instance().Game();
+    var strJson = System.Text.Json.JsonSerializer.Serialize(game);
+    byte[] bytes = System.Text.ASCIIEncoding.ASCII.GetBytes(strJson);
+    var filestream = new MemoryStream(bytes);
+    var filename = $"{@GetGame().Title}-gamesheet.json";
+    using var streamRef = new DotNetStreamReference(stream: filestream);
+    await JSRuntime.InvokeVoidAsync("downloadFileFromStream", filename, streamRef);
+    } */
+
+    async Task EndGame()
+    {
+        Game game = Api.GameService.Instance().Game();
+        var strJson = System.Text.Json.JsonSerializer.Serialize(game);
+        byte[] bytes = System.Text.ASCIIEncoding.ASCII.GetBytes(strJson);
+        using var stream = new MemoryStream(bytes);
+        var fileSaverResult = await
+        CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync($"{GetGame().Title}-gamesheet.json",
+        stream);
+
+
+
+    }
+}
