@@ -10,11 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		fbukALZFFrZvGcSoY5jRK1H55Kg=
-		</data>
-		<key>Resources/MauiInfo.plist</key>
-		<data>
-		A/74dbGgxu/fUONI00Bycn7+qco=
+		U7YhXV+OtHQDv7TMMoIv3LsY8hE=
 		</data>
 		<key>Resources/MonoTouchDebugConfiguration.txt</key>
 		<data>
@@ -26,7 +22,7 @@
 		</data>
 		<key>Resources/appicon.icns</key>
 		<data>
-		aMzKOgohzGAv/lLBBlKjq/Ct6ig=
+		5mzfBIH83YLWm6vM21dzRfYWaxE=
 		</data>
 		<key>Resources/dotnet_bot.png</key>
 		<data>
@@ -39,14 +35,6 @@
 		<key>Resources/dotnet_bot@3x.png</key>
 		<data>
 		jXSnnjxHQZ6uFzh0eoLcGcy6i+4=
-		</data>
-		<key>Resources/wwwroot/PuckTracker.bundle.scp.css</key>
-		<data>
-		hqfnrAzKkwbKC94+znpbljLxdHI=
-		</data>
-		<key>Resources/wwwroot/PuckTracker.styles.css</key>
-		<data>
-		hqfnrAzKkwbKC94+znpbljLxdHI=
 		</data>
 		<key>Resources/wwwroot/_content/Blazorise.Bootstrap5/blazorise.bootstrap5.css</key>
 		<data>
@@ -320,21 +308,9 @@
 		<data>
 		McLzd1i9FAOTbknNSsATI7ix6CY=
 		</data>
-		<key>Resources/wwwroot/css/app.css</key>
-		<data>
-		E/oDUzcarmeDsgZweAT1ZZcRQ10=
-		</data>
 		<key>Resources/wwwroot/css/blazor-ui.css</key>
 		<data>
 		RRRBOA1YTHeKHm28xZWQO5QU/ug=
-		</data>
-		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css</key>
-		<data>
-		jtsHWseLbc++2kIJaD2gL4Lreeg=
-		</data>
-		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css.map</key>
-		<data>
-		q/MDqBoEj02v9tdu3AjM/ZeKQLQ=
 		</data>
 		<key>Resources/wwwroot/favicon.png</key>
 		<data>
@@ -696,14 +672,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KAVHQErIsqseXJ4OncfJoi0Z2c7F02nJudD8pwyUfh0=
+			31AId8ak1ff0Wkjc9ePU2a98uiHnG1PACB+v1d855pU=
 			</data>
 		</dict>
 		<key>MonoBundle/PuckTracker.pdb</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UszPAqP4Jc/uXlf4OFzDBlc/1z1+Me908dJDUtK2KHs=
+			vmnIYRqwRfVjlmf1VTDx4Rx1heWazkUni9C7PGQwdsY=
 			</data>
 		</dict>
 		<key>MonoBundle/System.AppContext.dll</key>
@@ -2124,14 +2100,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			PhoYj/d6BYYIxAlYFGflGmEh5JlUtotYe5qbF93o2nE=
-			</data>
-		</dict>
-		<key>Resources/MauiInfo.plist</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			UEORARmYMQB21vcObyk2tL7rhjGOSCGHQz3UGRUssW0=
+			6mvdgpXJLXORKKiXZt/hoh1U6SMfxMcDP3ECgK/wDsY=
 			</data>
 		</dict>
 		<key>Resources/MonoTouchDebugConfiguration.txt</key>
@@ -2152,7 +2121,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/pivYVdUHD7ChxCYuFQd16qpZbftUsb/YE4NjSFPMfQ=
+			GbSBypJRADp9Yywhc6t3AV3DM4ge72APjnS+cvs2Gw8=
 			</data>
 		</dict>
 		<key>Resources/dotnet_bot.png</key>
@@ -2174,20 +2143,6 @@
 			<key>hash2</key>
 			<data>
 			Le5HIeQJla77ho01igbIxgmf/iFLOKDwNZaSSxcUl2M=
-			</data>
-		</dict>
-		<key>Resources/wwwroot/PuckTracker.bundle.scp.css</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			YLeDig/5yJXMo3O+M6Wpu3UQn+ipr+C50/jJcrSneKw=
-			</data>
-		</dict>
-		<key>Resources/wwwroot/PuckTracker.styles.css</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			YLeDig/5yJXMo3O+M6Wpu3UQn+ipr+C50/jJcrSneKw=
 			</data>
 		</dict>
 		<key>Resources/wwwroot/_content/Blazorise.Bootstrap5/blazorise.bootstrap5.css</key>
@@ -2666,32 +2621,11 @@
 			LOWzu7sb7bYZR9FNbVFvALKJVZYoF6HdtaE83yjaaxc=
 			</data>
 		</dict>
-		<key>Resources/wwwroot/css/app.css</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			K1bY5kgLeD7nMlhLfmEK3TdjOVTQGBzyOIF4YwRlzuQ=
-			</data>
-		</dict>
 		<key>Resources/wwwroot/css/blazor-ui.css</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			jm4xNjixyXxyrhOanIiedWGJw/91aa/DWfwhUkFQByY=
-			</data>
-		</dict>
-		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=
-			</data>
-		</dict>
-		<key>Resources/wwwroot/css/bootstrap/bootstrap.min.css.map</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=
 			</data>
 		</dict>
 		<key>Resources/wwwroot/favicon.png</key>
