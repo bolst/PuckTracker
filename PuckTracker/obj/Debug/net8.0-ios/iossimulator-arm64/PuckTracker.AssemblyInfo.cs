@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PuckTracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+1af06a578384da2acb25523eb80b7e71da673bf8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+19ebb9ea90adfbc455d81cddb78d4aba806824b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("PuckTracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PuckTracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
