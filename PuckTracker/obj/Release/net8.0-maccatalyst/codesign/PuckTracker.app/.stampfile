@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - --entitlements /Users/nic/git/PuckTracker/PuckTracker/obj/Release/net8.0-maccatalyst/Entitlements.xcent /Users/nic/git/PuckTracker/PuckTracker/bin/Release/net8.0-maccatalyst/PuckTracker.app

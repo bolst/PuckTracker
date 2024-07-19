@@ -10,20 +10,6 @@
             <CloseButton />
         </ModalHeader>
         <ModalBody>
-            @* <Field>
-            <FieldLabel>Home/Away</FieldLabel>
-            <Select TValue="string" @bind-SelectedValue="@selectedHomeAway">
-            <SelectItem Value=@("Home")>Home</SelectItem>
-            <SelectItem Value=@("Away")>Away</SelectItem>
-            </Select>
-            </Field>
-            <Field>
-            <FieldLabel>Goal/Penalty</FieldLabel>
-            <Select TValue="string" @bind-SelectedValue="@selectedGoalPenalty">
-            <SelectItem Value=@("Goal")>Goal</SelectItem>
-            <SelectItem Value=@("Penalty")>Penalty</SelectItem>
-            </Select>
-            </Field> *@
             <Field>
                 <FieldLabel>Time</FieldLabel>
                 <Select @bind-SelectedValue="@selectedMin">
@@ -47,6 +33,7 @@
                     <SelectItem Value="1">1</SelectItem>
                     <SelectItem Value="2">2</SelectItem>
                     <SelectItem Value="3">3</SelectItem>
+                    <SelectItem Value="4">OT</SelectItem>
                 </Select>
             </Field>
             <Field>

@@ -79,17 +79,6 @@
         return Api.GameService.Instance().Game();
     }
 
-    /* async Task EndGame()
-    {
-    Game game = Api.GameService.Instance().Game();
-    var strJson = System.Text.Json.JsonSerializer.Serialize(game);
-    byte[] bytes = System.Text.ASCIIEncoding.ASCII.GetBytes(strJson);
-    var filestream = new MemoryStream(bytes);
-    var filename = $"{@GetGame().Title}-gamesheet.json";
-    using var streamRef = new DotNetStreamReference(stream: filestream);
-    await JSRuntime.InvokeVoidAsync("downloadFileFromStream", filename, streamRef);
-    } */
-
     async Task EndGame()
     {
         Game game = Api.GameService.Instance().Game();
@@ -99,8 +88,5 @@
         var fileSaverResult = await
         CommunityToolkit.Maui.Storage.FileSaver.Default.SaveAsync($"{GetGame().Title}-gamesheet.json",
         stream);
-
-
-
     }
 }

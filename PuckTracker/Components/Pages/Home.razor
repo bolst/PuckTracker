@@ -2,8 +2,17 @@
 @inject NavigationManager navManager
 
 @code {
+    static bool firstRender = true;
     protected override void OnInitialized()
     {
-        navManager.NavigateTo("/gamesheet");
+        if (firstRender)
+        {
+            navManager.NavigateTo("/rosters");
+            firstRender = false;
+        }
+        else
+        {
+            navManager.NavigateTo("/gamesheet");
+        }
     }
 }

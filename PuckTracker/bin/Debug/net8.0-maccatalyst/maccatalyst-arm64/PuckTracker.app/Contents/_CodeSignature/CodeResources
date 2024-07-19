@@ -12,6 +12,10 @@
 		<data>
 		QEfak8e+hWYQ3qy1MzmIRNYt8jg=
 		</data>
+		<key>Resources/MauiInfo.plist</key>
+		<data>
+		A/74dbGgxu/fUONI00Bycn7+qco=
+		</data>
 		<key>Resources/MonoTouchDebugConfiguration.txt</key>
 		<data>
 		oowkf1sL6T19nanXUObgmuayWqM=
@@ -672,14 +676,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KWzPuEU+3ydxI+ahB3F9unZmMHEiaIgjBiO6ix5Jre0=
+			aDNZ/12pSImLTX42WIrDoBnqg4SJNKDheBS8XLOzU+0=
 			</data>
 		</dict>
 		<key>MonoBundle/PuckTracker.pdb</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			b43lafUet8oEZzjqYb9YNFUtZd6/I9b6vM7UvqG4Ol8=
+			ta6WMVPMP22d5NGEi5QSL5z4axA0lM6HAQaotbdgwCs=
 			</data>
 		</dict>
 		<key>MonoBundle/System.AppContext.dll</key>
@@ -2101,6 +2105,13 @@
 			<key>hash2</key>
 			<data>
 			nIRv2444yOsSaDj7nfrX3d+3tLRxgPZhBwCdXOT+rtc=
+			</data>
+		</dict>
+		<key>Resources/MauiInfo.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			UEORARmYMQB21vcObyk2tL7rhjGOSCGHQz3UGRUssW0=
 			</data>
 		</dict>
 		<key>Resources/MonoTouchDebugConfiguration.txt</key>
