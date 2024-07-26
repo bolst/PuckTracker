@@ -15,14 +15,11 @@ namespace PuckTracker.Api
         #endregion
 
         private const string ROSTERS_FILE_PATH = "wwwroot/rosters.json";
-        private const string NUMBERS_FILE_PATH = "wwwroot/numbers.json";
         private List<Roster> rosters;
-        private Dictionary<string, string> playerNumbers;
 
         private RosterService()
         {
             rosters = new(); // GetSavedRosters(); 
-            playerNumbers = new(); // GetSavedPlayerNumbers();
         }
 
         public async Task AddRoster(Roster roster)
@@ -64,14 +61,6 @@ namespace PuckTracker.Api
                 using StreamWriter stream = new StreamWriter(ostream);
                 await stream.WriteAsync(json);
             }
-
-            using (FileStream ostream = System.IO.File.OpenWrite(NUMBERS_FILE_PATH))
-            {
-                string json = JsonSerializer.Serialize(playerNumbers);
-                using StreamWriter stream = new StreamWriter(ostream);
-                await stream.WriteAsync(json);
-            }
-
         }
 
         private bool firstRosterFetch = true;
@@ -95,76 +84,6 @@ namespace PuckTracker.Api
         {
             return rosters.Where(r => r.Name == name).FirstOrDefault();
         }
-
-        private Dictionary<string, string> DefaultPlayerNumbers()
-        {
-            Dictionary<string, string> res = new();
-
-            foreach (Roster roster in rosters)
-            {
-                foreach (Player player in roster.Players)
-                {
-                    res.Add(player.Name, "0");
-                }
-            }
-            return res;
-        }
-
-        private async Task<Dictionary<string, string>> GetSavedPlayerNumbers()
-        {
-            try
-            {
-                using var stream = await FileSystem.OpenAppPackageFileAsync(NUMBERS_FILE_PATH);
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string json = reader.ReadToEnd();
-                    Dictionary<string, string> res = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? DefaultPlayerNumbers();
-                    return res;
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("GetSavedPlayerNumbers:\nCouldn't parse data");
-                return DefaultPlayerNumbers();
-            }
-        }
-
-        private bool firstNumbersFetch = true;
-        public async Task<Dictionary<string, string>> GetPlayerNumbers()
-        {
-            if (firstNumbersFetch)
-            {
-                playerNumbers = await GetSavedPlayerNumbers();
-                firstNumbersFetch = false;
-            }
-
-            return playerNumbers;
-        }
-
-        public async Task<string> GetPlayerNumber(string playerName)
-        {
-            if (firstNumbersFetch)
-            {
-                playerNumbers = await GetSavedPlayerNumbers();
-                firstNumbersFetch = false;
-            }
-
-            if (playerNumbers.ContainsKey(playerName))
-            {
-                return playerNumbers[playerName];
-            }
-            else
-            {
-                return "0";
-            }
-        }
-
-        public async Task UpdatePlayerNumber(string playerName, string playerNumber)
-        {
-            playerNumbers[playerName] = playerNumber;
-            await SaveData();
-        }
-
 
     }
 }

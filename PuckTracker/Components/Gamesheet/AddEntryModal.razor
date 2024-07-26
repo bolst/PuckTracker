@@ -38,36 +38,24 @@
             </Field>
             <Field>
                 <FieldLabel>Player</FieldLabel>
-                <Select @bind-SelectedValue="@selectedPlayer">
-                    @for (int i = 1; i <= 99; i++)
-                    {
-                        int j = i;
-                        <SelectItem Value="@j">@j</SelectItem>
-                    }
+                <Select @bind-SelectedValue="@selectedPlayerNum">
+                    @PlayerSelectItems()
                 </Select>
             </Field>
             @if (IsGoal)
             {
                 <Field>
                     <FieldLabel>Primary Assist</FieldLabel>
-                    <Select @bind-SelectedValue="@selectedAssist1">
+                    <Select @bind-SelectedValue="@selectedAssist1Num">
                         <SelectItem Value=@("")></SelectItem>
-                        @for (int i = 1; i <= 99; i++)
-                        {
-                            int j = i;
-                            <SelectItem Value="@j">@j</SelectItem>
-                        }
+                        @PlayerSelectItems()
                     </Select>
                 </Field>
                 <Field>
                     <FieldLabel>Secondary Assist</FieldLabel>
-                    <Select @bind-SelectedValue="@selectedAssist2">
+                    <Select @bind-SelectedValue="@selectedAssist2Num">
                         <SelectItem Value=@("")></SelectItem>
-                        @for (int i = 1; i <= 99; i++)
-                        {
-                            int j = i;
-                            <SelectItem Value="@j">@j</SelectItem>
-                        }
+                        @PlayerSelectItems()
                     </Select>
                 </Field>
             }
@@ -101,6 +89,22 @@
 </Modal>
 
 @code {
+
+    RenderFragment PlayerSelectItems() => __builder =>
+    {
+        string teamName = Api.GameService.Instance().Game().AwayTeam;
+        if (IsHome)
+        {
+            teamName = Api.GameService.Instance().Game().HomeTeam;
+        }
+
+        foreach (var player in Api.RosterService.Instance().GetRosterByName(teamName).Players)
+        {
+            string num = player.Number;
+            <SelectItem Value="@num">@num</SelectItem>
+        }
+    };
+
     Color buttonColor = Color.Primary;
     string buttonText = "Add Goal";
     protected override void OnInitialized()
@@ -109,6 +113,12 @@
         buttonText = IsGoal ? "Add Goal" : "Add Penalty";
         selectedHomeAway = IsHome ? "Home" : "Away";
         selectedGoalPenalty = IsGoal ? "Goal" : "Penalty";
+        string teamName = Api.GameService.Instance().Game().AwayTeam;
+        if (IsHome)
+        {
+            teamName = Api.GameService.Instance().Game().HomeTeam;
+        }
+        selectedPlayerNum = Api.RosterService.Instance().GetRosterByName(teamName).Players.First().Number ?? "1";
     }
 
 
@@ -120,9 +130,9 @@
     private string selectedPeriod = "1";
     private string selectedHomeAway = "Home";
     private string selectedGoalPenalty = "Home";
-    private string selectedPlayer = "1";
-    private string selectedAssist1 = "";
-    private string selectedAssist2 = "";
+    private string selectedPlayerNum = "1";
+    private string selectedAssist1Num = "";
+    private string selectedAssist2Num = "";
     private string selectedInfraction = "Tripping";
     private string selectedDuration = "2";
 
@@ -173,7 +183,7 @@
     {
         Penalty penalty = new Penalty
             {
-                PlayerNumber = selectedPlayer,
+                PlayerNumber = selectedPlayerNum,
                 Infraction = selectedInfraction,
                 Minutes = selectedDuration,
                 Time = selectedMin + ":" + selectedSec,
@@ -185,9 +195,9 @@
     {
         Goal goal = new Goal
             {
-                PlayerNumber = selectedPlayer,
-                Assist1 = selectedAssist1,
-                Assist2 = selectedAssist2,
+                PlayerNumber = selectedPlayerNum,
+                Assist1 = selectedAssist1Num,
+                Assist2 = selectedAssist2Num,
                 Time = selectedMin + ":" + selectedSec,
                 Period = selectedPeriod,
             };
@@ -197,7 +207,7 @@
     {
         Penalty penalty = new Penalty
             {
-                PlayerNumber = selectedPlayer,
+                PlayerNumber = selectedPlayerNum,
                 Infraction = selectedInfraction,
                 Minutes = selectedDuration,
                 Time = selectedMin + ":" + selectedSec,
@@ -210,9 +220,9 @@
     {
         Goal goal = new Goal
             {
-                PlayerNumber = selectedPlayer,
-                Assist1 = selectedAssist1,
-                Assist2 = selectedAssist2,
+                PlayerNumber = selectedPlayerNum,
+                Assist1 = selectedAssist1Num,
+                Assist2 = selectedAssist2Num,
                 Time = selectedMin + ":" + selectedSec,
                 Period = selectedPeriod,
             };

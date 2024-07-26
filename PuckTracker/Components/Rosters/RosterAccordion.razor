@@ -10,14 +10,17 @@
             <AccordionBody>
     @foreach (var player in roster.Players)
     {
-        <Grid RowColumns="RowColumns.Are3" Padding="Padding.Is2.FromBottom">
-            <Column ColumnSize="ColumnSize.IsThird">
+        <Grid RowColumns="RowColumns.Are4" Padding="Padding.Is2.FromBottom">
+            <Column ColumnSize="ColumnSize.IsQuarter">
+            <Heading Size="HeadingSize.Is6" TextWeight="TextWeight.Bold">@player.Number</Heading>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsQuarter">
             <Heading Size="HeadingSize.Is6" TextWeight="TextWeight.Bold">@player.Name</Heading>
             </Column>
-            <Column ColumnSize="ColumnSize.IsThird">
+            <Column ColumnSize="ColumnSize.IsQuarter">
             <Heading Size="HeadingSize.Is6">@player.BirthYear</Heading>
             </Column>
-            <Column ColumnSize="ColumnSize.IsThird">
+            <Column ColumnSize="ColumnSize.IsQuarter">
             <Heading Size="HeadingSize.Is6">@player.Position</Heading>
             </Column>
         </Grid>

@@ -1,6 +1,5 @@
 @page "/rosters"
 
-<EditNumbersRosterModal />
 <UploadRosterModal />
 <DeleteRosterModal />
 
@@ -10,8 +9,8 @@
     foreach (Roster roster in rosters)
     {
         <Div Padding="Padding.Is3.OnY">
-    <RosterAccordion roster="@roster" />
-</Div>
+            <RosterAccordion roster="@roster" />
+        </Div>
     }
 }
 

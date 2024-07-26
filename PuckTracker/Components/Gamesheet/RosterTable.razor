@@ -1,26 +1,26 @@
 @namespace PuckTracker.Components
 
-@if ((roster is not null) && (nameAndNumbers is not null))
+@if (roster is not null)
 {
     <Table Bordered FullWidth TextSize="TextSize.Small">
-    <TableHeader>
-        <TableRow>
-            <TableHeaderCell ColumnSpan="2" TextColor="TextColor.Secondary">@roster.Name.ToUpper()</TableHeaderCell>
-        </TableRow>
-    </TableHeader>
-    <TableHeader>
-        <TableRow>
-            <TableHeaderCell TextAlignment="TextAlignment.Center">#</TableHeaderCell>
-            <TableHeaderCell TextAlignment="TextAlignment.Center">PLAYER</TableHeaderCell>
-        </TableRow>
-    </TableHeader>
-    <TableBody>
-        @foreach (var (name, num) in nameAndNumbers)
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell ColumnSpan="2" TextColor="TextColor.Secondary">@roster.Name.ToUpper()</TableHeaderCell>
+            </TableRow>
+        </TableHeader>
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell TextAlignment="TextAlignment.Center">#</TableHeaderCell>
+                <TableHeaderCell TextAlignment="TextAlignment.Center">PLAYER</TableHeaderCell>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            @foreach (var player in roster.Players)
             {
                 <TableRow>
                     <TableRowHeader TextAlignment="TextAlignment.Center">
-                        @num</TableRowHeader>
-                    <TableRowCell TextAlignment="TextAlignment.Center">@name</TableRowCell>
+                        @player.Number</TableRowHeader>
+                    <TableRowCell TextAlignment="TextAlignment.Center">@player.Name</TableRowCell>
                 </TableRow>
             }
         </TableBody>
@@ -29,18 +29,4 @@
 
 @code {
     [Parameter] public Roster? roster { get; set; } = null;
-
-    List<(string, string)>? nameAndNumbers = null;
-    protected override async Task OnInitializedAsync()
-    {
-        if (roster is not null)
-        {
-            nameAndNumbers = new();
-            foreach (Player player in roster.Players)
-            {
-                string num = await Api.RosterService.Instance().GetPlayerNumber(player.Name);
-                nameAndNumbers.Add((player.Name, num));
-            }
-        }
-    }
 }
