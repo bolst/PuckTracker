@@ -13,10 +13,10 @@
         <ModalBody>
             <Field>
                 <FieldLabel>Selection</FieldLabel>
-                @if (rosters is not null)
+                @if (Rosters is not null && Rosters.Count != 0)
                 {
                     <Select @bind-SelectedValue="@selectedTeam">
-                        @foreach (Roster roster in rosters)
+                        @foreach (Roster roster in Rosters)
                         {
                             <SelectItem Value="@roster.Name">@roster.Name</SelectItem>
                         }
@@ -43,20 +43,20 @@
     #endregion
 
     string selectedTeam;
-    List<Roster>? rosters = null;
+    List<Roster>? Rosters = null;
     protected override async Task OnInitializedAsync()
     {
-        rosters = await Api.RosterService.Instance().Rosters();
-        if (rosters.Count != 0)
+        Rosters = await Api.RosterService.Instance().Rosters();
+        if (Rosters.Count != 0)
         {
-            selectedTeam = rosters[0].Name;
+            selectedTeam = Rosters[0].Name;
         }
     }
 
     async Task DeleteRoster()
     {
-        await Api.RosterService.Instance().DeleteRoster(selectedTeam);
         await HideModal();
+        Rosters = await Api.RosterService.Instance().DeleteRoster(selectedTeam);
 
         navManager.NavigateTo("/redirect?To=rosters");
         // navManager.NavigateTo(navManager.Uri, true);

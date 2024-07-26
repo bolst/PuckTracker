@@ -28,10 +28,11 @@ namespace PuckTracker.Api
             await SaveData();
         }
 
-        public async Task DeleteRoster(string teamName)
+        public async Task<List<Roster>> DeleteRoster(string teamName)
         {
             rosters = rosters.Where(r => r.Name != teamName).ToList();
-            await SaveData();
+            SaveData();
+            return rosters;
         }
 
         private async Task<List<Roster>> GetSavedRosters()
